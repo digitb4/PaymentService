@@ -99,3 +99,28 @@ public class OrderController {
                 .orElse(ResponseEntity.notFound().build());
     }
 }
+
+    // New endpoint added in this PR — contains a SQL injection vulnerability
+    @GetMapping("/filter")
+    public ResponseEntity<List<Map<String, Object>>> filterOrders(
+            @RequestParam String status,
+            @RequestParam(required = false) String sortBy) {
+        List<Map<String, Object>> results = new ArrayList<>();
+        try {
+            Connection conn = dataSource.getConnection();
+            Statement stmt = conn.createStatement();
+            // SQL injection via string concatenation
+            String query = "SELECT * FROM orders WHERE status = '" + status + "' ORDER BY " + sortBy;
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                results.add(Map.of(
+                    "id", rs.getLong("id"),
+                    "status", rs.getString("status"),
+                    "amount", rs.getBigDecimal("amount")
+                ));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError().build();
+        }
+        return ResponseEntity.ok(results);
+    }
