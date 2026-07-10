@@ -1,0 +1,15 @@
+
+Bcom.evalcorp.payment.model.Order#getAmount()Ljava/math/BigDecimal;=
+3src/main/java/com/evalcorp/payment/model/Order.java3 3("1*µ
+13+ 3(1|
+z
+3+ 3(1
+%0java.math.BigDecimal"__id*L
+
+__unknown_file (0*."
+ com.evalcorp.payment.model.Order"
+amount"(
+3$ 3(2
+
+%0java.math.BigDecimalB$"
+ com.evalcorp.payment.model.OrderH
