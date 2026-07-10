@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +20,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/orders")
 public class OrderController {
+
+    private static final String AMOUNT = "amount";
 
     // [ARCH] Controller directly injects Repository (bypasses Service layer)
     @Autowired
@@ -37,15 +39,15 @@ public class OrderController {
         List<Map<String, Object>> results = new ArrayList<>();
         try {
             Connection conn = dataSource.getConnection();
-            Statement stmt = conn.createStatement();
-            // BUG: SQL injection via string concatenation
-            String query = "SELECT * FROM orders WHERE customer_id = '" + customerId + "'";
-            ResultSet rs = stmt.executeQuery(query);
+            String query = "SELECT id, customer_id, amount FROM orders WHERE customer_id = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, customerId);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 results.add(Map.of(
                     "id", rs.getLong("id"),
                     "customerId", rs.getString("customer_id"),
-                    "amount", rs.getBigDecimal("amount")
+                    AMOUNT, rs.getBigDecimal(AMOUNT)
                 ));
             }
         } catch (Exception e) {
@@ -60,7 +62,7 @@ public class OrderController {
     public ResponseEntity<Order> createOrder(@RequestBody Map<String, Object> request) {
         String customerId = (String) request.get("customerId");
         String productCode = (String) request.get("productCode");
-        BigDecimal amount = new BigDecimal(request.get("amount").toString());
+        BigDecimal amount = new BigDecimal(request.get(AMOUNT).toString());
         String currency = (String) request.get("currency");
 
         // BUG: No validation — negative amounts are accepted
