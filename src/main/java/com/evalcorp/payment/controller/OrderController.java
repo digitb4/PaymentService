@@ -22,14 +22,18 @@ import java.util.Map;
 public class OrderController {
 
     // [ARCH] Controller directly injects Repository (bypasses Service layer)
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+
+    private final PaymentService paymentService;
+
+    private final DataSource dataSource;
 
     @Autowired
-    private PaymentService paymentService;
-
-    @Autowired
-    private DataSource dataSource;
+    public OrderController(OrderRepository orderRepository, PaymentService paymentService, DataSource dataSource) {
+        this.orderRepository = orderRepository;
+        this.paymentService = paymentService;
+        this.dataSource = dataSource;
+    }
 
     // [SEC] SQL injection — customerId concatenated into raw JDBC query
     @GetMapping("/search")
