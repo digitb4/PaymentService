@@ -15,14 +15,16 @@ import java.util.UUID;
 @Service
 public class PaymentService {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
+    private final PaymentRepository paymentRepository;
+    private final NotificationService notificationService;
 
     @Autowired
-    private PaymentRepository paymentRepository;
-
-    @Autowired
-    private NotificationService notificationService;
+    public PaymentService(OrderRepository orderRepository, PaymentRepository paymentRepository, NotificationService notificationService) {
+        this.orderRepository = orderRepository;
+        this.paymentRepository = paymentRepository;
+        this.notificationService = notificationService;
+    }
 
     // [REL] NPE — Optional.get() without isPresent() check
     public Payment processRefund(Long orderId) {
