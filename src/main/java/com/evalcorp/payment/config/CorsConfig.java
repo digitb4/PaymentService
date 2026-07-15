@@ -15,7 +15,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 // [SEC] Wildcard CORS — allowedOrigins("*")
                 registry.addMapping("/**")
-                        .allowedOrigins("*")
+                        .allowedOrigins("https://trustedwebsite.com")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(false);
