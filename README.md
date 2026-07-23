@@ -32,3 +32,5 @@ mvn spring-boot:run
 | POST | /api/orders | Create a new order |
 | POST | /api/orders/{id}/pay | Process payment for order |
 | POST | /api/orders/{id}/refund | Process refund for order |
+
+<!-- SonarCloud PR analysis trigger -->
