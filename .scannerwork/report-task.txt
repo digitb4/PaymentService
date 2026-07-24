@@ -1,0 +1,7 @@
+organization=digitb4
+projectKey=digitb4_PaymentService
+serverUrl=https://sonarcloud.io
+serverVersion=8.0.0.96128
+dashboardUrl=https://sonarcloud.io/dashboard?id=digitb4_PaymentService
+ceTaskId=AZ9K5h2vAxpcMre7hjv9
+ceTaskUrl=https://sonarcloud.io/api/ce/task?id=AZ9K5h2vAxpcMre7hjv9
