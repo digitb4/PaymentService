@@ -1,0 +1,16 @@
+
+@com.evalcorp.payment.model.Order#getCurrency()Ljava/lang/String;=
+3src/main/java/com/evalcorp/payment/model/Order.java6 6("1*¯
+16) 6(1z
+x
+6) 6(1
+%0java.lang.String"__id*N
+
+__unknown_file (2*0"
+ com.evalcorp.payment.model.Order"
+
+currency"$
+6" 6(2
+
+%0java.lang.StringB$"
+ com.evalcorp.payment.model.OrderH
